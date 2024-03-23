@@ -33,8 +33,30 @@ function createWindow() {
               properties: ['openDirectory']
             }).then(result => {
               if (!result.canceled) {
-                // Send selected directory path to renderer process
-                // mainWindow.webContents.send('folder-selected', result.filePaths[0]);
+                const folderPath = result.filePaths[0];
+                const folderStructure = generateFolderStructure(folderPath);
+                const jsonData = JSON.stringify(folderStructure, (key, value) => {
+                  return value;
+                });
+                mainWindow.webContents.executeJavaScript(`
+                  $('#kt_docs_jstree_basic').jstree({
+                    "core" : {
+                        "themes" : {
+                            "responsive": false
+                        },
+                        "data": ${jsonData}
+                    },
+                    "types" : {
+                        "default" : {
+                            "icon" : "fa fa-folder"
+                        },
+                        "file" : {
+                            "icon" : "fa fa-file"
+                        }
+                    },
+                    "plugins": ["types"]
+                  });
+                `);
               }
             }).catch(err => {
               console.log(err);
@@ -71,33 +93,33 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 
-  const folderPath = "C:\\Users\\Hp\\OneDrive\\Bureau\\machos";
-  const folderStructure = generateFolderStructure(folderPath);
-  const jsonData = JSON.stringify(folderStructure, (key, value) => {
-    return value;
-  });
+  // const folderPath = "C:\\Users\\Hp\\OneDrive\\Bureau\\machos";
+  // const folderStructure = generateFolderStructure(folderPath);
+  // const jsonData = JSON.stringify(folderStructure, (key, value) => {
+  //   return value;
+  // });
 
-  mainWindow.webContents.on('did-finish-load', () => {
-    mainWindow.webContents.executeJavaScript(`
-      $('#kt_docs_jstree_basic').jstree({
-        "core" : {
-            "themes" : {
-                "responsive": false
-            },
-            "data": ${jsonData}
-        },
-        "types" : {
-            "default" : {
-                "icon" : "fa fa-folder"
-            },
-            "file" : {
-                "icon" : "fa fa-file"
-            }
-        },
-        "plugins": ["types"]
-      });
-    `);
-  });
+  // mainWindow.webContents.on('did-finish-load', () => {
+  //   mainWindow.webContents.executeJavaScript(`
+  //     $('#kt_docs_jstree_basic').jstree({
+  //       "core" : {
+  //           "themes" : {
+  //               "responsive": false
+  //           },
+  //           "data": ${jsonData}
+  //       },
+  //       "types" : {
+  //           "default" : {
+  //               "icon" : "fa fa-folder"
+  //           },
+  //           "file" : {
+  //               "icon" : "fa fa-file"
+  //           }
+  //       },
+  //       "plugins": ["types"]
+  //     });
+  //   `);
+  // });
 
   mainWindow.on('closed', function () {
     mainWindow = null;
