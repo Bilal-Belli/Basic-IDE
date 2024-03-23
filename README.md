@@ -8,7 +8,7 @@ Please consider supporting me ❤️
 
 ## Demo
 <div align="center">
-   <!-- <video src=""></video> -->
+   <video src="https://github.com/Bilal-Belli/Basic-IDE/assets/74218805/c31d0f58-96c3-4812-a919-b111294db131"></video>
 </div>
 
 ## Technologies
