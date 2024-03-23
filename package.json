@@ -1,0 +1,37 @@
+{
+  "name": "IDE",
+  "productName": "IDE",
+  "description": "An application to edit C/C++ code. Note: to build the application put (''electron-builder'': ''24.10.0'') in ('devDependencies':) and put ('dist': 'electron-builder') in ('scripts':) then execute (npm run dist)",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.1",
+  "author": "Bilal Belli",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "bootstrap": "5.3.2",
+    "jquery": "^3.7.1",
+    "jstree": "^3.3.16",
+    "lodash": "^4.17.21",
+    "quill": "^1.3.7"
+  },
+  "build": {
+    "appId": "com.bilalbelli.IDE",
+    "productName": "IDE",
+    "mac": {
+      "icon": "./icons/logo.icns"
+    },
+    "win": {
+      "icon": "./icons/logo.ico"
+    },
+    "linux": {
+      "icon": "./icons/logo.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "27.1.3",
+    "electron-builder": "^24.9.1"
+  }
+}

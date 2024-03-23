@@ -1,0 +1,18 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    height: 100%;
+}
+.file-tree-container {
+    flex: 0 0 20%; 
+    border-right: 1px solid #ccc;
+    overflow: auto; /* Allow scrolling if content overflows */
+}
+.editor-container {
+    flex: 1;
+    overflow: auto; /* Allow scrolling if content overflows */
+}

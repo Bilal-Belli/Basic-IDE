@@ -1,0 +1,17 @@
+Menu should include : -File, clicking on which 5 options : open file, open folder,
+ new file, new folder, New Window (actions on them are general that proceed normally).
+
+-Terminal, clicking on which terminal appear like it pop up in VSCode 
+
+
+* there should be View on left which contains the file/ folder directory 
+tree(similar functionality like in VScode or other IDE like add file'/folder buttons etc.)
+
+
+on right View contain file internal code etc. 
+
+
+and Tabs should appear also on top for opened files and if terminal is open it should be at bottom 
+of right View (same like VScode and all these View should be scrollable).
+
+*File should support c and c++ syntax intelligence and should have prettier or any formatter integrated.
