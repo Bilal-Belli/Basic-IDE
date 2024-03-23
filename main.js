@@ -1,7 +1,9 @@
-const { app, BrowserWindow, shell, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, shell, Menu, dialog } = require('electron');
+const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 let mainWindow;
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, 'icons/logo.ico'),
@@ -33,7 +35,7 @@ function createWindow() {
               properties: ['openDirectory']
             }).then(result => {
               if (!result.canceled) {
-                const folderPath = result.filePaths[0];
+                var folderPath = result.filePaths[0];
                 const folderStructure = generateFolderStructure(folderPath);
                 const jsonData = JSON.stringify(folderStructure, (key, value) => {
                   return value;
@@ -86,40 +88,21 @@ function createWindow() {
     {
       label: 'Terminal',
       click: () => {
-        // Implement your open folder logic here
+        if (process.platform === 'darwin') {
+          // For macOS
+          spawn('open', ['-a', 'Terminal', '.']);
+        } else if (process.platform === 'win32') {
+          // For Windows
+          spawn('cmd.exe', ['/c', 'start', 'cmd']);
+        } else {
+          // For Linux or other Unix-like systems
+          spawn('x-terminal-emulator', [], { detached: true });
+        }
       },
     },
   ];
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
-
-  // const folderPath = "C:\\Users\\Hp\\OneDrive\\Bureau\\machos";
-  // const folderStructure = generateFolderStructure(folderPath);
-  // const jsonData = JSON.stringify(folderStructure, (key, value) => {
-  //   return value;
-  // });
-
-  // mainWindow.webContents.on('did-finish-load', () => {
-  //   mainWindow.webContents.executeJavaScript(`
-  //     $('#kt_docs_jstree_basic').jstree({
-  //       "core" : {
-  //           "themes" : {
-  //               "responsive": false
-  //           },
-  //           "data": ${jsonData}
-  //       },
-  //       "types" : {
-  //           "default" : {
-  //               "icon" : "fa fa-folder"
-  //           },
-  //           "file" : {
-  //               "icon" : "fa fa-file"
-  //           }
-  //       },
-  //       "plugins": ["types"]
-  //     });
-  //   `);
-  // });
 
   mainWindow.on('closed', function () {
     mainWindow = null;
